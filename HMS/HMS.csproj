@@ -189,6 +189,12 @@
     <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccomodationPackagesController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\AccomodationTypesController.cs" />
+    <Compile Include="Areas\Dashboard\Controllers\DashboardController.cs" />
+    <Compile Include="Areas\Dashboard\DashboardAreaRegistration.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\AccomodationPackagesListingModels.cs" />
+    <Compile Include="Areas\Dashboard\ViewModels\AccomodationTypesModels.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
@@ -196,12 +202,26 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Areas\Dashboard\Content\css\simple-sidebar.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.min.css" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.js" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.js" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="favicon.ico" />
@@ -213,6 +233,30 @@
     <Content Include="ApplicationInsights.config">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Areas\Dashboard\Views\web.config" />
+    <Content Include="Areas\Dashboard\Views\_ViewStart.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Shared\_Layout.cshtml" />
+    <Content Include="Areas\Dashboard\Views\Dashboard\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-grid.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap-reboot.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\css\bootstrap.min.css.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.bundle.min.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\bootstrap\js\bootstrap.min.js.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.min.map" />
+    <Content Include="Areas\Dashboard\Content\vendor\jquery\jquery.slim.min.map" />
+    <Content Include="Areas\Dashboard\Views\AccomodationTypes\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationTypes\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationTypes\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationTypes\_Delete.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\Index.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\_Listing.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\_Action.cshtml" />
+    <Content Include="Areas\Dashboard\Views\AccomodationPackages\_Delete.cshtml" />
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -224,7 +268,9 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
-    <Content Include="Web.config" />
+    <Content Include="Web.config">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </Content>
@@ -261,6 +307,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Areas\Dashboard\Models\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -274,6 +321,20 @@
   <ItemGroup>
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\HMS.Data\HMS.Data.csproj">
+      <Project>{e8385fab-875a-46b4-98c9-bfc41f06f1e5}</Project>
+      <Name>HMS.Data</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Entities\HMS.Entities.csproj">
+      <Project>{db1403be-bd42-48dd-86dc-ada7a200d433}</Project>
+      <Name>HMS.Entities</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\HMS.Services\HMS.Services.csproj">
+      <Project>{3C3039D4-3762-42FF-B934-94567E4E40DE}</Project>
+      <Name>HMS.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

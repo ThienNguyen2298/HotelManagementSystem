@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelManagement.Entities
+namespace HMS.Entities
 {
     public class AccomodationType
     {

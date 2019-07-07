@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace HotelManagement.Entities
+namespace HMS.Entities
 {
     public class Booking
     {
@@ -13,5 +13,6 @@ namespace HotelManagement.Entities
         public Accomodation Accomodation { get; set; }
         public DateTime dateTime { get; set; }
         public int Duration { get; set; }
+
     }
 }
