@@ -17,7 +17,7 @@ namespace HMS.Services
             return context.AccomodationPackages.ToList();
         }
         //Display after searched
-        public IEnumerable<AccomodationPackage> SearchAccomodationPackages(string searchTerm)
+        public IEnumerable<AccomodationPackage> SearchAccomodationPackages(string searchTerm, int? accomodationTypeID)
         {
             var context = new HMSContext();
             var accomodationPackages = context.AccomodationPackages.AsQueryable();
@@ -25,12 +25,18 @@ namespace HMS.Services
             {
                 accomodationPackages = accomodationPackages.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
             }
+            if (accomodationTypeID.HasValue && accomodationTypeID.Value > 0)
+            {
+                accomodationPackages = accomodationPackages.Where(x => x.AccomodationTypeID == accomodationTypeID.Value);
+            }
             return accomodationPackages.ToList();
         }
         public AccomodationPackage GetAccomodationPackageByID(int ID)
         {
-            var context = new HMSContext();
-            return context.AccomodationPackages.Find(ID);
+            using (var context = new HMSContext())
+            {
+                return context.AccomodationPackages.Find(ID);
+            }
         }
         //Function create
         public bool SaveAccomodationPackage(AccomodationPackage accomodationPackage)
@@ -42,6 +48,7 @@ namespace HMS.Services
         //Function edit
         public bool UpdateAccomodationPackage(AccomodationPackage accomodationPackage)
         {
+
             var context = new HMSContext();
             context.Entry(accomodationPackage).State = System.Data.Entity.EntityState.Modified;
             return context.SaveChanges() > 0;

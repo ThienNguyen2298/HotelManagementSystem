@@ -6,6 +6,7 @@
         <thead>
             <tr>
                 <th scope="col">Name</th>
+                <th scope="col">Accomodation Type</th>
                 <th scope="col">NoOfRoom</th>
                 <th scope="col">FeePerNight</th>
                 <th scope="col">Actions</th>
@@ -16,8 +17,14 @@
             {
                 <tr>
                     <td>@AccomodationPackage.Name</td>
+                    <td>
+                        @if (AccomodationPackage.AccomodationType != null)
+                        {
+                            @AccomodationPackage.AccomodationType.Name
+                        }
+                    </td>
                     <td>@AccomodationPackage.NoOfRoom</td>
-                    <td>@AccomodationPackage.FeePerNight</td>
+                    <td>$ @AccomodationPackage.FeePerNight</td>
                     <td>
                         <button data-href="@Url.Action("Action","AccomodationPackages", new { ID = AccomodationPackage.ID })" type="button" class="data-btn btn btn-primary" data-toggle="modal" data-target="#actionModal"><i class="fas fa-pen mr-1"></i> Edit</button>
                         <button data-href="@Url.Action("Delete","AccomodationPackages", new { ID = AccomodationPackage.ID })" type="button" class="data-btn btn btn-danger" data-toggle="modal" data-target="#actionModal"><i class="fas fa-trash-alt mr-1"></i> Delete</button>

@@ -14,15 +14,19 @@ namespace HMS.Areas.Dashboard.Controllers
         AccomodationPackagesService accomodationPackagesService = new AccomodationPackagesService();
         AccomodationTypesService accomodationTypesService = new AccomodationTypesService();
         // GET: Dashboard/AccomodationPackages
-        public ActionResult Index(string searchTerm)
+        public ActionResult Index(string searchTerm, int? accomodationTypeID)
         {
             AccomodationPackagesListingModels model = new AccomodationPackagesListingModels();
             model.SearchTerm = searchTerm;
-            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm);
+            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm, accomodationTypeID);
+
+            model.AccomodationTypeID = accomodationTypeID;
+            model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
+
             return View(model);
         }
         [HttpGet]
-        //ID được gán kiểu nullable
+        //ID được gán kiểu nullable - HttpGet là click vào lấy dữ liệu
         public ActionResult Action(int? ID)
         {
             AccomodationPackagesActionModels model = new AccomodationPackagesActionModels();
@@ -31,6 +35,7 @@ namespace HMS.Areas.Dashboard.Controllers
             {
                 var accomodationPackage = accomodationPackagesService.GetAccomodationPackageByID(ID.Value);
                 model.ID = accomodationPackage.ID;
+                model.AccomodationTypeID = accomodationPackage.AccomodationTypeID;
                 model.Name = accomodationPackage.Name;
                 model.NoOfRoom = accomodationPackage.NoOfRoom;
                 model.FeePerNight = accomodationPackage.FeePerNight;
@@ -50,15 +55,20 @@ namespace HMS.Areas.Dashboard.Controllers
             if (model.ID > 0)//we are trying to edit a record
             {
                 var accomodationPackage = accomodationPackagesService.GetAccomodationPackageByID(model.ID);
+
+                accomodationPackage.AccomodationTypeID = model.AccomodationTypeID;
                 accomodationPackage.Name = model.Name;
                 accomodationPackage.NoOfRoom = model.NoOfRoom;
                 accomodationPackage.FeePerNight = model.FeePerNight;
+
                 result = accomodationPackagesService.UpdateAccomodationPackage(accomodationPackage);
             }
             else    //we are trying to create a record
             {
                 AccomodationPackage accomodationPackage = new AccomodationPackage();
                 accomodationPackage.Name = model.Name;
+                accomodationPackage.AccomodationTypeID = model.AccomodationTypeID;
+                //accomodationPackage.AccomodationType = accomodationTypesService.GetAccomodationTypeByID(model.AccomodationTypeID);
                 accomodationPackage.NoOfRoom = model.NoOfRoom;
                 accomodationPackage.FeePerNight = model.FeePerNight;
 

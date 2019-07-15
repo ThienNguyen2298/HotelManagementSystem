@@ -27,11 +27,14 @@
                 <div class="form-group">
                     <label>Accomodation Type</label>
                     <select  class="form-control" name="AccomodationTypeID">
+                        
                         @if (Model.AccomodationTypes != null)
                         {
                             foreach (var accomodationType in Model.AccomodationTypes)
                             {
-                                <option value="@accomodationType.ID">@accomodationType.Name</option>
+                                <option value="@accomodationType.ID" @(accomodationType.ID == Model.AccomodationTypeID ? "selected" : string.Empty)>
+                                    @accomodationType.Name
+                                </option>
                             }
                         }
                     </select>
