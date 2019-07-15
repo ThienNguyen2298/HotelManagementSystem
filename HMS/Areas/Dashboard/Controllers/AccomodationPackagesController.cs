@@ -1,6 +1,7 @@
 ﻿using HMS.Areas.Dashboard.ViewModels;
 using HMS.Entities;
 using HMS.Services;
+using HMS.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,14 +15,20 @@ namespace HMS.Areas.Dashboard.Controllers
         AccomodationPackagesService accomodationPackagesService = new AccomodationPackagesService();
         AccomodationTypesService accomodationTypesService = new AccomodationTypesService();
         // GET: Dashboard/AccomodationPackages
-        public ActionResult Index(string searchTerm, int? accomodationTypeID)
+        public ActionResult Index(string searchTerm, int? accomodationTypeID, int? page)
         {
+            int recordSize = 3;
+            page = page ?? 1;
             AccomodationPackagesListingModels model = new AccomodationPackagesListingModels();
             model.SearchTerm = searchTerm;
-            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm, accomodationTypeID);
+            model.AccomodationPackages = accomodationPackagesService.SearchAccomodationPackages(searchTerm, accomodationTypeID, page.Value, recordSize);
 
             model.AccomodationTypeID = accomodationTypeID;
             model.AccomodationTypes = accomodationTypesService.GetAllAccomodationTypes();
+
+            var totalRecords = accomodationPackagesService.SearchAccomodationPackagesCount(searchTerm, accomodationTypeID);
+            //thuộc tính phân trang
+            model.Pager = new Pager(totalRecords, page, recordSize);
 
             return View(model);
         }

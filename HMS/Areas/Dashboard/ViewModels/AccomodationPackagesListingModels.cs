@@ -1,4 +1,5 @@
 ﻿using HMS.Entities;
+using HMS.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +15,8 @@ namespace HMS.Areas.Dashboard.ViewModels
         public int? AccomodationTypeID { get; set; }
 
         public string SearchTerm { get; set; }
+
+        public Pager Pager { get; set; }
     }
     public class AccomodationPackagesActionModels
     {

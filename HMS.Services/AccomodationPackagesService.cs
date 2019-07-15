@@ -17,9 +17,10 @@ namespace HMS.Services
             return context.AccomodationPackages.ToList();
         }
         //Display after searched
-        public IEnumerable<AccomodationPackage> SearchAccomodationPackages(string searchTerm, int? accomodationTypeID)
+        public IEnumerable<AccomodationPackage> SearchAccomodationPackages(string searchTerm, int? accomodationTypeID, int page, int recordSize)
         {
             var context = new HMSContext();
+            
             var accomodationPackages = context.AccomodationPackages.AsQueryable();
             if (!string.IsNullOrEmpty(searchTerm))
             {
@@ -29,7 +30,31 @@ namespace HMS.Services
             {
                 accomodationPackages = accomodationPackages.Where(x => x.AccomodationTypeID == accomodationTypeID.Value);
             }
-            return accomodationPackages.ToList();
+
+            var skip = (page - 1) * recordSize;
+            // skip  = (1    - 1) * 3 = 0 * 3 = 0
+            // skip  = (2    - 1) * 3 = 1 * 3 = 3
+            // skip  = (3    - 1) * 3 = 2 * 3 = 6
+
+            return accomodationPackages.OrderBy(x=>x.AccomodationTypeID).Skip(skip).Take(recordSize).ToList();
+        }
+        public int SearchAccomodationPackagesCount(string searchTerm, int? accomodationTypeID)
+        {
+            var context = new HMSContext();
+
+            var accomodationPackages = context.AccomodationPackages.AsQueryable();
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                accomodationPackages = accomodationPackages.Where(x => x.Name.ToLower().Contains(searchTerm.ToLower()));
+            }
+            if (accomodationTypeID.HasValue && accomodationTypeID.Value > 0)
+            {
+                accomodationPackages = accomodationPackages.Where(x => x.AccomodationTypeID == accomodationTypeID.Value);
+            }
+
+            
+
+            return accomodationPackages.Count();
         }
         public AccomodationPackage GetAccomodationPackageByID(int ID)
         {
