@@ -62,6 +62,10 @@
     <Compile Include="Migrations\201907030949542_moi.Designer.cs">
       <DependentUpon>201907030949542_moi.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201908020808124_addedUserProperties.cs" />
+    <Compile Include="Migrations\201908020808124_addedUserProperties.Designer.cs">
+      <DependentUpon>201908020808124_addedUserProperties.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -81,6 +85,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201907030949542_moi.resx">
       <DependentUpon>201907030949542_moi.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201908020808124_addedUserProperties.resx">
+      <DependentUpon>201908020808124_addedUserProperties.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
